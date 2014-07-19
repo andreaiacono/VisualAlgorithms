@@ -1,8 +1,8 @@
 function Tree() {
     this.svg = new Canvas().getCanvas();
     this.numNodes = 1;
-    this.root = new Node(Math.round(Math.random() * 90) + 9, "black", this.svg);
-    //this.draw();
+    this.root = new Node(Math.round(Math.random() * 90) + 9, "black", 0, this.svg);
+    this.treeHeight = this.getHeight(this.root, 0);
 }
 
 Tree.prototype.clear = function () {
@@ -18,24 +18,34 @@ Tree.prototype.clearNodes = function (node) {
     }
 }
 
+Tree.prototype.getHeight = function(node, level) {
+
+    if (node == null) return level;
+
+    var leftHeight = this.getHeight(node.leftNode, level+1);
+    var rightHeight = this.getHeight(node.rightNode, level+1);
+
+    return leftHeight > rightHeight ? leftHeight : rightHeight;
+}
+
 Tree.prototype.draw = function () {
 
     var width = document.getElementById("svg-canvas").clientWidth;
     //var height = document.getElementById("svg-canvas").clientHeight;
-    var r = width / 20;
+    var r = width / 40;
     var x = width / 2 - r / 2;
     var y = r + r/3;
 
-    console.log("root text=" + this.root.value);
-    this.drawNode(this.root, x, y, r);
+    console.log("heght:" + this.treeHeight);
+    this.drawNode(null, this.root, x, y, r, this.treeHeight);
 }
 
-Tree.prototype.drawNode = function (node, x, y, r) {
+Tree.prototype.drawNode = function (parent, node, x, y, r, h) {
 
     if (node != null) {
-        node.draw(x, y, r);
-        this.drawNode(node.leftNode, x - r * 3, y + r * 3, r);
-        this.drawNode(node.rightNode, x + r * 3, y + r * 3, r);
+        node.draw(x, y, r, parent);
+        this.drawNode(node, node.leftNode, x - r * h , y + r * 3, r, h-1);
+        this.drawNode(node, node.rightNode, x + r * h, y + r * 3, r, h-1);
     }
 }
 
@@ -49,20 +59,34 @@ Tree.prototype.insertNode = function (value) {
     }
 
     var color = Math.random() > 0.5 ? "black" : "red";
-    if (lastNode.leftNode == null && lastNode.rightNode == null) {
+    var newNode = new Node(value, color, lastNode.level + 1, this.svg);
 
-        if (Math.random() > 0.5) lastNode.leftNode = new Node(value, color, this.svg);
-        else lastNode.rightNode = new Node(value, color, this.svg);
+    if (lastNode.leftNode == null && lastNode.rightNode == null) {
+        if (Math.random() > 0.5) lastNode.leftNode = newNode;
+        else lastNode.rightNode = newNode;
     }
     else if (lastNode.leftNode == null) {
-        lastNode.leftNode = new Node(value, color, this.svg);
+        lastNode.leftNode = newNode;
     }
     else {
-        lastNode.rightNode = new Node(value, color, this.svg);
+        lastNode.rightNode = newNode;
     }
 
     this.numNodes++;
+
+    var newHeight = this.getHeight(this.root, 0);
+    if (this.treeHeight < newHeight ) {
+        this.treeHeight = newHeight;
+        this.clear()
+    }
     this.draw();
+}
+
+Tree.prototype.insertNodes = function () {
+    var j;
+    for (j=0; j<1; j++) {
+        this.insertNode(Math.round(Math.random()*90)+9);
+    }
 }
 
 window.onresize = function (event) {
