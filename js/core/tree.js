@@ -5,9 +5,12 @@ function Tree() {
     this.treeHeight = this.getHeight(this.root, 0);
 }
 
+Tree.prototype.clearCanvas = function () {
+	this.svg.text("");
+}
+
 Tree.prototype.clear = function () {
-    this.svg.text("");
-    this.clearNodes(this.root);
+   // this.clearNodes(this.root);
 }
 
 Tree.prototype.clearNodes = function (node) {
@@ -28,24 +31,40 @@ Tree.prototype.getHeight = function(node, level) {
     return leftHeight > rightHeight ? leftHeight : rightHeight;
 }
 
-Tree.prototype.draw = function () {
+Tree.prototype.draw = function (rescale) {
 
     var width = document.getElementById("svg-canvas").clientWidth;
     //var height = document.getElementById("svg-canvas").clientHeight;
-    var r = width / 40;
+    var r = width / 80;
     var x = width / 2 - r / 2;
     var y = r + r/3;
 
-    console.log("heght:" + this.treeHeight);
-    this.drawNode(null, this.root, x, y, r, this.treeHeight);
+    //console.log("heght:" + this.treeHeight);
+    if (rescale) {
+    console.log("rescaling()");
+	
+    	this.rescaleNode(null, this.root, x, y, r, this.treeHeight-1);
+    }
+    console.log("drawing()");
+	
+	    this.drawNode(null, this.root, x, y, r, this.treeHeight-1);
+}
+
+Tree.prototype.rescaleNode = function (parent, node, x, y, r, h) {
+
+    if (node != null) {
+        node.rescale(x, y, r, parent);
+        this.rescaleNode(node, node.leftNode, x - r * h * h , y + r * 3, r, h-1);
+        this.rescaleNode(node, node.rightNode, x + r * h * h, y + r * 3, r, h-1);
+    }
 }
 
 Tree.prototype.drawNode = function (parent, node, x, y, r, h) {
 
     if (node != null) {
         node.draw(x, y, r, parent);
-        this.drawNode(node, node.leftNode, x - r * h , y + r * 3, r, h-1);
-        this.drawNode(node, node.rightNode, x + r * h, y + r * 3, r, h-1);
+        this.drawNode(node, node.leftNode, x - r * h * h , y + r * 3, r, h-1);
+        this.drawNode(node, node.rightNode, x + r * h * h, y + r * 3, r, h-1);
     }
 }
 
@@ -77,21 +96,23 @@ Tree.prototype.insertNode = function (value) {
     var newHeight = this.getHeight(this.root, 0);
     if (this.treeHeight < newHeight ) {
         this.treeHeight = newHeight;
-        this.clear()
+        this.draw(true)
     }
-    this.draw();
+        this.draw(false);
+	
 }
 
 Tree.prototype.insertNodes = function () {
     var j;
     for (j=0; j<1; j++) {
-        this.insertNode(Math.round(Math.random()*90)+9);
+        this.insertNode(Math.round(Math.random()*89)+10);
     }
 }
 
 window.onresize = function (event) {
-    tree.clear();
-    tree.draw();
+	tree.clear();	
+	tree.clearCanvas();
+    tree.draw(false);
 };
 
 //function transction() {
