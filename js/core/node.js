@@ -20,9 +20,9 @@ function Node(value, color, level, svg) {
 
 Node.prototype.rescale = function (x, y, r, parent) {
 	if (parent != null) {
-        alpha = Math.atan2(y -parent.y, x-parent.x);
-        coords1 = this.getLineCoords(x, y, alpha, r, false);
-        coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
+        var alpha = Math.atan2(y -parent.y, x-parent.x);
+        var coords1 = this.getLineCoords(x, y, alpha, r, false);
+        var coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
 
 		d3.select("#line-" + this.textValue)
 			.transition()
@@ -51,9 +51,9 @@ Node.prototype.draw = function (x, y, r, parent) {
     if (!this.alreadyDrawn) {
 
 		if (parent != null) {
-            alpha = Math.atan2(y -parent.y, x-parent.x);
-            coords1 = this.getLineCoords(x, y, alpha, r, false);
-            coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
+            var alpha = Math.atan2(y -parent.y, x-parent.x);
+            var coords1 = this.getLineCoords(x, y, alpha, r, false);
+            var coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
 			this.lineObject = this.svg.append("line")
 			.attr("id", "line-" + this.textValue)
 			.attr("x1", coords1[0])
