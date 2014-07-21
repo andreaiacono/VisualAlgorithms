@@ -20,13 +20,16 @@ function Node(value, color, level, svg) {
 
 Node.prototype.rescale = function (x, y, r, parent) {
 	if (parent != null) {
-		console.log("parent: " + parent.id + " x=" + parent.x + " y=" + parent.y);
+        alpha = Math.atan2(y -parent.y, x-parent.x);
+        coords1 = this.getLineCoords(x, y, alpha, r, false);
+        coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
+
 		d3.select("#line-" + this.textValue)
 			.transition()
-			.attr("x1", x)
-			.attr("y1", y)
-			.attr("x2", parent.x)
-			.attr("y2", parent.y);
+            .attr("x1", coords1[0])
+            .attr("y1", coords1[1])
+            .attr("x2", coords2[0])
+            .attr("y2", coords2[1])
 	}
 
     d3.select("#circle-" + this.textValue)
@@ -48,12 +51,15 @@ Node.prototype.draw = function (x, y, r, parent) {
     if (!this.alreadyDrawn) {
 
 		if (parent != null) {
-			this.lineObject = this.svg.append("line")	
+            alpha = Math.atan2(y -parent.y, x-parent.x);
+            coords1 = this.getLineCoords(x, y, alpha, r, false);
+            coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
+			this.lineObject = this.svg.append("line")
 			.attr("id", "line-" + this.textValue)
-			.attr("x1", x)
-			.attr("y1", y)
-			.attr("x2", parent.x)
-			.attr("y2", parent.y)
+			.attr("x1", coords1[0])
+			.attr("y1", coords1[1])
+			.attr("x2", coords2[0])
+			.attr("y2", coords2[1])
 			.attr("stroke-width", 2)
 			.attr("stroke", "black");	
 		}
@@ -86,3 +92,19 @@ Node.prototype.draw = function (x, y, r, parent) {
     this.x = x;
     this.y = y;
 };
+
+
+Node.prototype.getLineCoords = function (x, y, alpha, r, isParent) {
+
+    if (isParent) {
+        x += Math.cos(alpha) * r;
+        y += Math.sin(alpha) * r;
+    }
+    else {
+        x -= Math.cos(alpha) * r;
+        y -= Math.sin(alpha) * r;
+    }
+
+    return [x, y];
+
+}
