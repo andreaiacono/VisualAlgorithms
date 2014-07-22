@@ -1,11 +1,4 @@
-$(document).ready(function () {
-    loadMenu();
-});
-
-
-function loadMenu() {
-
-    var menu = '<ul>\
+var menu = '<ul>\
         <li class="test"><a href="#">Home</a></li>\
         <li class="test">\
             <a>Data Structures</a>\
@@ -70,6 +63,9 @@ function loadMenu() {
         </li>\
     </ul>';
 
-    document.getElementById("menu").innerHtml = "Andrea";
-    console.log("setting menu on div: " + document.getElementById("menu"));
-}
+
+$(document).ready(function () {
+    $('#menu').html(menu);
+});
+
+
