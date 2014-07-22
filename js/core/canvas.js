@@ -6,10 +6,12 @@ function Canvas() {
 Canvas.prototype.init = function () {
     this.svg = d3.select("body").append("svg")
         .attr("id", "svg-canvas")
-        .attr("width", "95%")
-        .attr("height", "90%")
-        .style("border", "1px solid black")
-        .style("margin", "0, auto");
+        .attr("width", "90%")
+        .attr("height", "200")
+        .style("background-color", "darkgray")
+        .style("margin", "20, auto")
+        .style("border", "1px solid grey")
+        .style("fill-opacity", "0.8");
 }
 
 Canvas.prototype.getCanvas = function () {

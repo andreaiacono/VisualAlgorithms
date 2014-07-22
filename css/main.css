@@ -103,7 +103,7 @@ textarea {
     color: #fff;
     font-size: 48px;
     float: right;
-    width: 40%;
+    width: 30%;
     margin: 100px;
 }
 
@@ -111,13 +111,9 @@ body {
     background-image: url('../img/bg-light.png');
     position: absolute;
     bottom: 0px;
-    left: 0px;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    min-width: 100%;
+    background-size: cover;
+    height:100%;
+    width: 100%;
 }
 
 div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, input, textarea, blockquote {
@@ -198,10 +194,11 @@ nav ul ul li {
     border-top: 1px solid #6b727c;
     border-bottom: 1px solid #575f6a;
     position: relative;
+    width: 200px;
 }
 
 nav ul ul li a {
-    padding: 10px 40px;
+    padding: 10px 10px;
     color: #fff;
 }
 
