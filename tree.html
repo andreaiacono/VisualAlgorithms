@@ -27,7 +27,7 @@
 	 <script>
             var tree;
             function init() {
-                tree = new Tree();
+                tree = new Tree(false);
                 tree.draw();
             }
         </script>
@@ -40,8 +40,8 @@
 <![endif]-->
 <nav id="menu"></nav>
 <div class="content">
-    Here goes the content.
+    A binary tree is a data structure is which each node has at most two children nodes, usually defined as <i>left node</i> and <i>right node</i>.
 </div>
-<a onClick="tree.insertNode(Math.round(Math.random()*89)+10)">Insert node</a>
+<a onClick="tree.insertRandomNode()">Insert node</a>
 </body>
 </html>

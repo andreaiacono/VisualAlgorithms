@@ -8,10 +8,11 @@ Canvas.prototype.init = function () {
         .attr("id", "svg-canvas")
         .attr("width", "90%")
         .attr("height", "200")
-        .style("background-color", "darkgray")
+        .style("background", "rgba(200,200,200,0.85")
         .style("margin", "20, auto")
-        .style("border", "1px solid grey")
-        .style("fill-opacity", "0.8");
+        .style("border", "2px solid lightgrey")
+        .style("fill-opacity", "0.8")
+        .style("margin-top", "70px");
 }
 
 Canvas.prototype.getCanvas = function () {
