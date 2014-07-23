@@ -1,9 +1,19 @@
 function Tree(isRedBlack) {
     this.isRedBlack = isRedBlack;
+
     this.svg = new Canvas().getCanvas();
     this.numNodes = 1;
-    this.root = new Node(this.getRandomNumber(), "black", 0, this.svg);
+    this.root = new Node(this.getRandomNumber(), "black", 0, this.isRedBlack, this.svg);
     this.treeHeight = this.getHeight(this.root, 0);
+}
+
+Tree.prototype.reset = function () {
+    d3.select("svg").remove();
+    this.svg = new Canvas().getCanvas();
+    var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root = new Node(this.getRandomNumber(), color, 0, this.isRedBlack, this.svg);
+    this.treeHeight = this.getHeight(this.root, 0);
+    this.draw();
 }
 
 Tree.prototype.clearCanvas = function () {
@@ -11,7 +21,7 @@ Tree.prototype.clearCanvas = function () {
 }
 
 Tree.prototype.clear = function () {
-    // this.clearNodes(this.root);
+    this.clearNodes(this.root);
 }
 
 Tree.prototype.clearNodes = function (node) {
@@ -35,12 +45,10 @@ Tree.prototype.getHeight = function (node, level) {
 Tree.prototype.draw = function (rescale) {
 
     var width = document.getElementById("svg-canvas").clientWidth;
-    //var height = document.getElementById("svg-canvas").clientHeight;
-    var r = width / 80;
-    var x = width / 2 - r / 2;
-    var y = r + r / 3;
+    var r = Math.round(width / 80);
+    var x = Math.round(width / 2 - r / 2);
+    var y = Math.round(r + r / 3);
 
-    //console.log("heght:" + this.treeHeight);
     if (rescale) {
         this.rescaleNode(null, this.root, x, y, r, this.treeHeight - 1);
     }
@@ -79,7 +87,7 @@ Tree.prototype.insertNode = function (value) {
     }
 
     var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    var newNode = new Node(value, color, lastNode.level + 1, this.svg);
+    var newNode = new Node(value, color, lastNode.level + 1, this.isRedBlack, this.svg);
 
     if (lastNode.leftNode == null && lastNode.rightNode == null) {
         if (Math.random() > 0.5) lastNode.leftNode = newNode;
@@ -130,41 +138,3 @@ window.onresize = function (event) {
     tree.clearCanvas();
     tree.draw(false);
 };
-
-//function transction() {
-//    d3.selectAll("circle").transition()
-//        .duration(750)
-//        .delay(function (d, i) {
-//            return i * 10;
-//        })
-//        .attr("r", function (d) {
-//            return Math.sqrt(d * scale);
-//        });
-//
-//}
-
-//function transX() {
-//    mySquare
-//        .transition()
-//        .attr("cx", 400);
-//}
-//
-//function transWidth() {
-//    mySquare
-//        .transition()
-//        .attr("r", 120); // will make it bigger
-//}
-//
-//function transFill() {
-//    mySquare
-//        .style("fill", "white") // if the fill is originally left blank and comes
-//        //  from a style sheet, it will start as black
-//        .transition()
-//        .style("fill", "blue");
-//}
-//
-//function transOpacity() {
-//    mySquare
-//        .transition()
-//        .style("opacity", 0);
-//}

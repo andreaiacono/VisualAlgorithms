@@ -24,13 +24,13 @@
     <script src="js/core/canvas.js"></script>
     <script src="js/core/node.js"></script>
     <script src="js/core/tree.js"></script>
-	 <script>
-            var tree;
-            function init() {
-                tree = new Tree(false);
-                tree.draw();
-            }
-        </script>
+    <script>
+        var tree;
+        function init() {
+            tree = new Tree(false);
+            tree.draw();
+        }
+    </script>
 
 </head>
 <body onLoad="init()">
@@ -40,8 +40,10 @@
 <![endif]-->
 <nav id="menu"></nav>
 <div class="content">
-    A binary tree is a data structure is which each node has at most two children nodes, usually defined as <i>left node</i> and <i>right node</i>.
+    A binary tree is a data structure is which each node has at most two children nodes, usually defined as <i>left
+    node</i> and <i>right node</i>.
 </div>
-<a onClick="tree.insertRandomNode()">Insert node</a>
+<button onClick="tree.insertRandomNode()" class="button">Insert node</a>
+<button onClick="tree.reset()" class="button">Reset tree</a>
 </body>
 </html>
