@@ -122,6 +122,13 @@ div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, inp
     border: 0;
 }
 
+.content {
+    width: 90%;
+    font-size: 24px;
+    color: green;
+    float: none;
+}
+
 nav {
     text-align: left;
     float: left;
