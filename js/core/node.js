@@ -71,7 +71,7 @@ Node.prototype.draw = function (x, y, r, parent) {
                 .attr("y1", coords1[1])
                 .attr("x2", coords2[0])
                 .attr("y2", coords2[1])
-                .attr("stroke-width", 2)
+                .attr("stroke-width", 1)
                 .attr("stroke", "black");
         }
 
@@ -98,6 +98,7 @@ Node.prototype.draw = function (x, y, r, parent) {
             .attr("x", x - r / 1.8)
             .attr("y", y + r / 2.8)
             .attr("font-size", 0)
+            .attr("text-anchor", "right")
             .style("cursor", "default")
             .on("mouseover", function () {
                 return tooltips[val].style("visibility", "visible");
@@ -131,11 +132,12 @@ Node.prototype.getToolTip = function (x, y, r) {
         .append(name)
         .style("position", "absolute")
         .style("z-index", "100")
+        .style("color", "#444")
         .style("top", svgRect.top + (y - r * 2) + "px")
         .style("left", svgRect.left + (x + r * 2) + "px")
-        .style("background-color", "rgba(220, 220, 220, 0.85)")
+        .style("background-color", "rgba(220, 220, 220, 0.9)")
         .style("border-radius", "8px")
-        .style("border", "1px solid black")
+        .style("border", "2px solid #555")
         .style("padding", "5px 15px")
         .style("visibility", "hidden")
         .html(this.getInfo());

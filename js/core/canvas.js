@@ -4,15 +4,15 @@ function Canvas() {
 }
 
 Canvas.prototype.init = function () {
-    this.svg = d3.select("body").append("svg")
+    this.svg = d3.select("svg-container").append("svg")
         .attr("id", "svg-canvas")
         .attr("width", "90%")
-        .attr("height", "200")
-        .style("background", "rgba(200,200,200,0.85")
+        .attr("height", "100%")
+        .style("background", "rgba(220,220,220,0.85")
         .style("margin", "20, auto")
-        .style("border", "2px solid lightgrey")
+        .style("border", "2px solid #555")
         .style("fill-opacity", "0.8")
-        .style("margin-top", "70px");
+        .style("position", "relative");
 }
 
 Canvas.prototype.getCanvas = function () {

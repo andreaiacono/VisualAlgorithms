@@ -114,7 +114,7 @@ Tree.prototype.getRandomNumber = function () {
 
     var rnd;
     do {
-        rnd = Math.round(Math.random() * 89) + 10;
+        rnd = Math.round(Math.random() * 99);
     }
     while (this.isPresent(rnd, this.root));
     return rnd;
