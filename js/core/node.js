@@ -98,6 +98,7 @@ Node.prototype.draw = function (x, y, r, parent) {
             .attr("x", x - r / 1.8)
             .attr("y", y + r / 2.8)
             .attr("font-size", 0)
+            .style("cursor", "default")
             .on("mouseover", function () {
                 return tooltips[val].style("visibility", "visible");
             })
@@ -157,12 +158,26 @@ Node.prototype.getLineCoords = function (x, y, alpha, r, isParent) {
 
 Node.prototype.getInfo = function () {
 
-    var info = "Key: <b>" + this.textValue + "</b><br>Left child: ";
-    if (this.leftNode != null) info += "<b>" + this.leftNode.textValue + "</b>";
-    else info += "<i>not present</i>";
-    info += "<br>Right child: ";
-    if (this.rightNode != null) info += "<b>" + this.rightNode.textValue + "</b>";
-    else info += "<i>not present</i>";
+    var info = "";
+    if (this.level != undefined && this.level == 0) {
+        info += "<center><b>Root Node</b></center>";
+    }
+    else if (this.leftNode == null && this.rightNode == null) {
+        info += "<center><b>Leaf Node</b></center>";
+    }
+    info += "Key: <b>" + this.textValue;
+
+    if (this.leftNode != null || this.rightNode != null) {
+        info += "</b><br>Left child: ";
+        if (this.leftNode != null) info += "<b>" + this.leftNode.textValue + "</b>";
+        else info += "<i>not present</i>";
+        info += "<br>Right child: ";
+        if (this.rightNode != null) info += "<b>" + this.rightNode.textValue + "</b>";
+        else info += "<i>not present</i>";
+    }
+    else {
+
+    }
     if (this.isRedBlack) {
         info += "<br>Color: " + this.borderColor;
     }
