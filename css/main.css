@@ -208,10 +208,10 @@ nav ul li {
 }
 
 nav ul li:hover {
-    /*background: #ddd;*/
-    background: linear-gradient(top, #2E2D2D 0%, #757575 100%);
-    background: -moz-linear-gradient(top, #2E2D2D 0%, #757575 100%);
-    background: -webkit-linear-gradient(top, #2E2D2D 0%, #757575 100%);
+    background: #585A5E;
+    /*background: linear-gradient(top, #2E2D2D 0%, #757575 100%);*/
+    /*background: -moz-linear-gradient(top, #2E2D2D 0%, #757575 100%);*/
+    /*background: -webkit-linear-gradient(top, #2E2D2D 0%, #757575 100%);*/
 }
 
 nav ul li:hover a {

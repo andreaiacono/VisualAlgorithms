@@ -17,7 +17,7 @@ function Node(value, color, level, isRedBlack, svg) {
         this.backgroundColor = "pink";
     }
     else {
-        this.backgroundColor = "lightgray";
+        this.backgroundColor = "#AAA";
     }
     this.borderColor = color;
     this.textColor = this.borderColor;
@@ -162,15 +162,15 @@ Node.prototype.getInfo = function () {
 
     var info = "";
     if (this.level != undefined && this.level == 0) {
-        info += "<center><b>Root Node</b></center>";
+        info += "<div style=\"text-align: center\"><b>Root Node</b></div>";
     }
     else if (this.leftNode == null && this.rightNode == null) {
-        info += "<center><b>Leaf Node</b></center>";
+        info +=  "<div style=\"text-align: center\"><b>Leaf Node</b></div>";
     }
-    info += "Key: <b>" + this.textValue;
+    info += "Key: <b>" + this.textValue + "</b>";
 
     if (this.leftNode != null || this.rightNode != null) {
-        info += "</b><br>Left child: ";
+        info += "<br>Left child: ";
         if (this.leftNode != null) info += "<b>" + this.leftNode.textValue + "</b>";
         else info += "<i>not present</i>";
         info += "<br>Right child: ";
@@ -181,7 +181,7 @@ Node.prototype.getInfo = function () {
 
     }
     if (this.isRedBlack) {
-        info += "<br>Color: " + this.borderColor;
+        info += "<br>Color: <b>" + this.borderColor + "</b>";
     }
 
     return info;

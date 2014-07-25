@@ -1,5 +1,5 @@
 function Tree(isRedBlack) {
-    this.isRedBlack = isRedBlack;
+    this.isRedBlack = true;
 
     this.svg = new Canvas().getCanvas();
     this.numNodes = 1;
