@@ -1,14 +1,14 @@
-function Tree(isRedBlack) {
-    this.isRedBlack = true;
-
-    this.svg = new Canvas().getCanvas();
+function Tree(isRedBlack, tagname, canvasWidth) {
+    this.isRedBlack = isRedBlack;
+    this.tagname = tagname;
+    this.svg = new Canvas(tagname, canvasWidth).getCanvas();
     this.numNodes = 1;
     this.root = new Node(this.getRandomNumber(), "black", 0, this.isRedBlack, this.svg);
     this.treeHeight = this.getHeight(this.root, 0);
 }
 
 Tree.prototype.reset = function () {
-    d3.select("svg").remove();
+    d3.select(this.tagname).remove();
     this.svg = new Canvas().getCanvas();
     var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
     this.root = new Node(this.getRandomNumber(), color, 0, this.isRedBlack, this.svg);
@@ -44,7 +44,7 @@ Tree.prototype.getHeight = function (node, level) {
 
 Tree.prototype.draw = function (rescale) {
 
-    var width = document.getElementById("svg-canvas").clientWidth;
+    var width = document.getElementById(this.tagname + "-canvas").clientWidth;
     var r = Math.round(width / 80);
     var x = Math.round(width / 2 - r / 2);
     var y = Math.round(r + r / 3);
@@ -132,9 +132,3 @@ Tree.prototype.insertNodes = function () {
         this.insertNode();
     }
 }
-
-window.onresize = function (event) {
-    tree.clear();
-    tree.clearCanvas();
-    tree.draw(false);
-};

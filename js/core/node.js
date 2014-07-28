@@ -126,7 +126,7 @@ Node.prototype.getToolTip = function (x, y, r) {
         d3.select(name).remove();
     }
 
-    var svgRect = document.getElementById("svg-canvas").getBoundingClientRect();
+    var svgRect = document.getElementById(this.svg.attr("id")).getBoundingClientRect();
 
     return d3.select("body")
         .append(name)
@@ -165,7 +165,7 @@ Node.prototype.getInfo = function () {
         info += "<div style=\"text-align: center\"><b>Root Node</b></div>";
     }
     else if (this.leftNode == null && this.rightNode == null) {
-        info +=  "<div style=\"text-align: center\"><b>Leaf Node</b></div>";
+        info += "<div style=\"text-align: center\"><b>Leaf Node</b></div>";
     }
     info += "Key: <b>" + this.textValue + "</b>";
 

@@ -7,7 +7,7 @@ var menu = '<ul>\
                     <ul>\
                         <li><a href="tree.html">Binary Trees</a></li>\
                         <li><a href="#">2-3-4 Trees</a></li>\
-                        <li><a href="#">Red-black Trees</a></li>\
+                        <li><a href="red-black-tree.html">Red-black Trees</a></li>\
                         <li><a href="#">Tries</a></li>\
                         <li><a href="#">Splay Trees</a></li>\
                         <li><a href="#">AVL Trees</a></li>\
