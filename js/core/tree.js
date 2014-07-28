@@ -1,19 +1,60 @@
 function Tree(isRedBlack, tagname, canvasWidth) {
     this.isRedBlack = isRedBlack;
     this.tagname = tagname;
-    this.svg = new Canvas(tagname, canvasWidth).getCanvas();
+    this.canvasWidth = canvasWidth;
+    this.svg = new Canvas(this.tagname, this.canvasWidth).getCanvas();
     this.numNodes = 1;
-    this.root = new Node(this.getRandomNumber(), "black", 0, this.isRedBlack, this.svg);
+    this.root = this.createRandomNode();
     this.treeHeight = this.getHeight(this.root, 0);
 }
 
 Tree.prototype.reset = function () {
-    d3.select(this.tagname).remove();
-    this.svg = new Canvas().getCanvas();
-    var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root = new Node(this.getRandomNumber(), color, 0, this.isRedBlack, this.svg);
+    d3.select("#" + this.tagname + "-canvas").remove();
+    this.svg = new Canvas(this.tagname, this.canvasWidth).getCanvas();
+    this.root = this.createRandomNode();
+    this.fillTree();
     this.treeHeight = this.getHeight(this.root, 0);
-    this.draw();
+    this.draw(true);
+}
+
+Tree.prototype.createRandomNode = function () {
+    var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    return new Node(this.getRandomNumber(), color, 0, this.isRedBlack, this.svg);
+}
+
+
+Tree.prototype.fillTree = function () {
+
+    var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode = new Node(this.getRandomNumber(), color, 1, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode = new Node(this.getRandomNumber(), color, 1, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.leftNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.rightNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.leftNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.rightNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
 }
 
 Tree.prototype.clearCanvas = function () {
@@ -49,27 +90,22 @@ Tree.prototype.draw = function (rescale) {
     var x = Math.round(width / 2 - r / 2);
     var y = Math.round(r + r / 3);
 
-    if (rescale) {
-        this.rescaleNode(null, this.root, x, y, r, this.treeHeight - 1);
-    }
-    this.drawNode(null, this.root, x, y, r, this.treeHeight - 1);
+    this.drawNode(rescale, null, this.root, x, y, r, this.treeHeight - 1);
 }
 
-Tree.prototype.rescaleNode = function (parent, node, x, y, r, h) {
+Tree.prototype.drawNode = function (rescale, parent, node, x, y, r, h) {
 
     if (node != null) {
-        node.rescale(x, y, r, parent);
-        this.rescaleNode(node, node.leftNode, x - r * h * h, y + r * 3, r, h - 1);
-        this.rescaleNode(node, node.rightNode, x + r * h * h, y + r * 3, r, h - 1);
-    }
-}
 
-Tree.prototype.drawNode = function (parent, node, x, y, r, h) {
+        if (rescale) {
+            node.rescale(x, y, r, parent);
+        }
+        else {
+            node.draw(x, y, r, parent);
+        }
 
-    if (node != null) {
-        node.draw(x, y, r, parent);
-        this.drawNode(node, node.leftNode, x - r * h * h, y + r * 3, r, h - 1);
-        this.drawNode(node, node.rightNode, x + r * h * h, y + r * 3, r, h - 1);
+        this.drawNode(rescale, node, node.leftNode, x - (r-1) * h * h, y + r * 3, r, h - 1);
+        this.drawNode(rescale, node, node.rightNode, x + (r-1) * h * h, y + r * 3, r, h - 1);
     }
 }
 

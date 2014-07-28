@@ -27,8 +27,8 @@
     <script>
         var tree;
         function init() {
-            tree = new Tree(false, "svg-container");
-            tree.draw();
+            tree = new Tree(false, "svg-container", "90%");
+            tree.draw(true);
         }
 
         window.onresize = function (event) {
@@ -50,6 +50,7 @@
         <svg-container></svg-container>
         <div class="buttons">
             <button onClick="tree.insertRandomNode()" class="button">Insert node</button>
+            &nbsp;&nbsp;&nbsp;
             <button onClick="tree.reset()" class="button">Reset tree</button>
         </div>
         <div class="content">

@@ -12,7 +12,7 @@ Canvas.prototype.init = function (tagname) {
         .style("background", "rgba(230, 230, 230, 0.85")
         .style("margin", "20, auto")
         .style("border", "2px solid #555")
-        .style("fill-opacity", "0.8")
+        .style("fill-opacity", "0.8");
 }
 
 Canvas.prototype.getCanvas = function () {
