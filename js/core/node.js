@@ -31,7 +31,7 @@ Node.prototype.rescale = function (x, y, r, parent) {
         var coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
 
         d3.select("#line-" + this.textValue)
-            .transition()
+            .transition().duration(250)
             .attr("x1", coords1[0])
             .attr("y1", coords1[1])
             .attr("x2", coords2[0])
@@ -39,12 +39,12 @@ Node.prototype.rescale = function (x, y, r, parent) {
     }
 
     d3.select("#circle-" + this.textValue)
-        .transition()
+        .transition().duration(250)
         .attr("cx", x)
         .attr("cy", y);
 
     d3.select("#text-" + this.textValue)
-        .transition()
+        .transition().duration(250)
         .attr("x", x - r / 1.8)
         .attr("y", y + r / 2.8);
 
@@ -62,11 +62,16 @@ Node.prototype.draw = function (x, y, r, parent) {
 
         if (parent != null) {
             var alpha = Math.atan2(y - parent.y, x - parent.x);
-            var coords1 = this.getLineCoords(x, y, alpha, r, false);
-            var coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
+            var coords1 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
+            var coords2 = this.getLineCoords(x, y, alpha, r, false);
 
             this.lineObject = this.svg.append("line")
                 .attr("id", "line-" + this.textValue)
+                .attr("x1", coords1[0])
+                .attr("y1", coords1[1])
+                .attr("x2", coords1[0])
+                .attr("y2", coords1[1])
+                .transition()
                 .attr("x1", coords1[0])
                 .attr("y1", coords1[1])
                 .attr("x2", coords2[0])
@@ -89,6 +94,7 @@ Node.prototype.draw = function (x, y, r, parent) {
                 return tooltips[val].style("visibility", "hidden");
             })
             .transition()
+            .delay(250)
             .attr("r", r)
             .transition()
             .attr("stroke-width", r / 20)
@@ -107,6 +113,7 @@ Node.prototype.draw = function (x, y, r, parent) {
                 return tooltips[val].style("visibility", "hidden");
             })
             .transition()
+            .delay(250)
             .attr("fill", this.textColor)
             .attr("font-size", r)
             .text(this.textValue);

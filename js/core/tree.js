@@ -1,27 +1,32 @@
-function Tree(isRedBlack, tagname, canvasWidth) {
+function Tree(isRedBlack, tagname, canvasWidth, zoom) {
     this.isRedBlack = isRedBlack;
     this.tagname = tagname;
     this.canvasWidth = canvasWidth;
+    this.zoom = zoom;
     this.svg = new Canvas(this.tagname, this.canvasWidth).getCanvas();
     this.numNodes = 1;
-    this.root = this.createRandomNode();
+    this.root = this.createRandomNode("black");
     this.treeHeight = this.getHeight(this.root, 0);
+    var c;
 }
 
 Tree.prototype.reset = function () {
     d3.select("#" + this.tagname + "-canvas").remove();
     this.svg = new Canvas(this.tagname, this.canvasWidth).getCanvas();
-    this.root = this.createRandomNode();
+    this.root = this.createRandomNode("black");
     this.fillTree();
     this.treeHeight = this.getHeight(this.root, 0);
-    this.draw(true);
+    this.draw(false);
 }
 
 Tree.prototype.createRandomNode = function () {
     var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    return new Node(this.getRandomNumber(), color, 0, this.isRedBlack, this.svg);
+    return this.createRandomNode(color);
 }
 
+Tree.prototype.createRandomNode = function (color) {
+    return new Node(this.getRandomNumber(), color, 0, this.isRedBlack, this.svg);
+}
 
 Tree.prototype.fillTree = function () {
 
@@ -55,6 +60,48 @@ Tree.prototype.fillTree = function () {
     this.root.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
     color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
     this.root.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.leftNode.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
+    this.root.rightNode.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
+
 }
 
 Tree.prototype.clearCanvas = function () {
@@ -86,7 +133,8 @@ Tree.prototype.getHeight = function (node, level) {
 Tree.prototype.draw = function (rescale) {
 
     var width = document.getElementById(this.tagname + "-canvas").clientWidth;
-    var r = Math.round(width / 80);
+    var radius = Math.round(this.zoom * width / 80);
+    r = radius;
     var x = Math.round(width / 2 - r / 2);
     var y = Math.round(r + r / 3);
 
@@ -103,9 +151,9 @@ Tree.prototype.drawNode = function (rescale, parent, node, x, y, r, h) {
         else {
             node.draw(x, y, r, parent);
         }
+        this.drawNode(rescale, node, node.leftNode, x - (r - 1) * h * h, y + r * 3, r, h - 1);
+        this.drawNode(rescale, node, node.rightNode, x + (r - 1) * h * h, y + r * 3, r, h - 1);
 
-        this.drawNode(rescale, node, node.leftNode, x - (r-1) * h * h, y + r * 3, r, h - 1);
-        this.drawNode(rescale, node, node.rightNode, x + (r-1) * h * h, y + r * 3, r, h - 1);
     }
 }
 
@@ -167,4 +215,61 @@ Tree.prototype.insertNodes = function () {
     for (j = 0; j < 1; j++) {
         this.insertNode();
     }
+}
+
+Tree.prototype.rotateLeftShow = function () {
+
+    this.root.leftNode = null;
+
+    var x = this.createRandomNode("black");
+    this.root.rightNode = x;
+
+    var a = this.createRandomNode("black");
+    x.leftNode = a;
+
+    var y = this.createRandomNode("black");
+    x.rightNode = y;
+
+    var b = this.createRandomNode("black");
+    y.leftNode = b;
+
+    c = this.createRandomNode("black");
+    y.rightNode = c;
+
+    this.treeHeight = this.getHeight(this.root, 0);
+    this.draw(false);
+    this.rotateTransition();
+}
+
+Tree.prototype.rotateTransition = function () {
+    var x = d3.select("#circle-" + c.textValue).attr("cx");
+    var y = d3.select("#circle-" + c.textValue).attr("cy");
+    var r = d3.select("#circle-" + c.textValue).attr("r");
+
+    d3.select("#circle-" + c.textValue)
+        .attr("r", r)
+        .attr("cx", x)
+        .attr("cy", y)
+        .transition().duration(2000)
+        .delay(500)
+        .attr("cx", x - 50)
+        .attr("cy", 200);
+
+    d3.select("#text-" + c.textValue)
+        .attr("x", x - r / 1.8)
+        .attr("y", y + r / 2.8)
+        .attr("text-anchor", "right")
+        .attr("font-size", r)
+        .transition().duration(2000)
+        .delay(500)
+        .attr("x", x-50 - r / 1.8)
+        .attr("y", 200 + r / 2.8);
+
+    d3.select("#line-" + c.textValue)
+        .transition().duration(2000)
+        .delay(500)
+        .attr("x2", x-50 - r / 1.8)
+        .attr("y2", 200 + r / 2.8)
+        .each("end", this.rotateTransition);
+
 }

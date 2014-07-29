@@ -29,10 +29,10 @@
         var treeRotate;
 
         function init() {
-            tree = new Tree(true, "svg-container", "90%");
-            tree.draw(true);
-            treeRotate = new Tree(true, "svg-container-rotate", "50%");
-            treeRotate.draw(true);
+            tree = new Tree(true, "svg-container", "90%", 1);
+            tree.draw(false);
+            treeRotate = new Tree(true, "svg-container-rotate", "50%", 2.5);
+            treeRotate.rotateLeftShow();
         }
 
         window.onresize = function (event) {

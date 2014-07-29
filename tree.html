@@ -27,8 +27,8 @@
     <script>
         var tree;
         function init() {
-            tree = new Tree(false, "svg-container", "90%");
-            tree.draw(true);
+            tree = new Tree(false, "svg-container", "90%", 1);
+            tree.draw(false);
         }
 
         window.onresize = function (event) {
