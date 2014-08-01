@@ -32,7 +32,6 @@
             tree = new Tree(true, "svg-container", "90%", 1);
             tree.draw(false);
             treeRotate = new Tree(true, "svg-container-rotate", "50%", 2.5);
-            treeRotate.rotateLeftShow();
         }
 
         window.onresize = function (event) {
@@ -65,10 +64,20 @@
         A red-black tree is a data structure which is a type of self-balancing binary search tree.
     </div>
     <svg-container-rotate></svg-container-rotate>
+    <div class="buttons">
+        <button onClick="treeRotate.rotateLeftAnimationStep1()" class="button">Start animation</button>
+    </div>
     <div class="content" border="1">
         <b>Rotations</b>
-        <p>How does inserting or deleting nodes affect a red-black tree? To ensure that its color scheme and properties don't get thrown off, red-black trees employ a key operation known as rotation. Rotation is a binary operation, between a parent node and one of its children, that swaps nodes and modifys their pointers while preserving the inorder traversal of the tree (so that elements are still sorted).</p>
-        <p>There are two types of rotations: left rotation and right rotation. Left rotation swaps the parent node with its right child, while right rotation swaps the parent node with its left child. Here are the steps involved in for left rotation (for right rotations just change "left" to "right" below)</p>
+
+        <p>How does inserting or deleting nodes affect a red-black tree? To ensure that its color scheme and properties
+            don't get thrown off, red-black trees employ a key operation known as rotation. Rotation is a binary operation,
+            between a parent node and one of its children, that swaps nodes and modifys their pointers while preserving the
+            inorder traversal of the tree (so that elements are still sorted).</p>
+
+        <p>There are two types of rotations: left rotation and right rotation. Left rotation swaps the parent node with its
+            right child, while right rotation swaps the parent node with its left child. Here are the steps involved in for
+            left rotation (for right rotations just change "left" to "right" below)</p>
     </div>
 </body>
 </html>

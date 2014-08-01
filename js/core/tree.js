@@ -7,7 +7,6 @@ function Tree(isRedBlack, tagname, canvasWidth, zoom) {
     this.numNodes = 1;
     this.root = this.createRandomNode("black");
     this.treeHeight = this.getHeight(this.root, 0);
-    var c;
 }
 
 Tree.prototype.reset = function () {
@@ -217,7 +216,10 @@ Tree.prototype.insertNodes = function () {
     }
 }
 
-Tree.prototype.rotateLeftShow = function () {
+Tree.prototype.rotateLeftAnimationStep1 = function () {
+
+    this.clearCanvas();
+    this.clear();
 
     this.root.leftNode = null;
 
@@ -233,43 +235,55 @@ Tree.prototype.rotateLeftShow = function () {
     var b = this.createRandomNode("black");
     y.leftNode = b;
 
-    c = this.createRandomNode("black");
+    var c = this.createRandomNode("black");
     y.rightNode = c;
 
     this.treeHeight = this.getHeight(this.root, 0);
     this.draw(false);
-    this.rotateTransition();
+    this.rotateLeftAnimationStep2();
 }
 
-Tree.prototype.rotateTransition = function () {
-    var x = d3.select("#circle-" + c.textValue).attr("cx");
-    var y = d3.select("#circle-" + c.textValue).attr("cy");
+Tree.prototype.rotateLeftAnimationStep2 = function () {
+
+    var x = this.root.rightNode;
+    var a = x.leftNode;
+    var y = x.rightNode;
+    var b = y.leftNode;
+    var c = y.rightNode;
+
+
+    var cx = d3.select("#circle-" + c.textValue).attr("cx");
+    var cy = d3.select("#circle-" + c.textValue).attr("cy");
     var r = d3.select("#circle-" + c.textValue).attr("r");
+    console.log("transtion c=" + c + " x=" + cx + " y=" + cy + " r=" + r);
 
     d3.select("#circle-" + c.textValue)
         .attr("r", r)
-        .attr("cx", x)
-        .attr("cy", y)
+        .attr("cx", cx)
+        .attr("cy", cy)
         .transition().duration(2000)
         .delay(500)
-        .attr("cx", x - 50)
+        .attr("cx", cx - 50)
         .attr("cy", 200);
 
     d3.select("#text-" + c.textValue)
-        .attr("x", x - r / 1.8)
-        .attr("y", y + r / 2.8)
+        .attr("x", cx - r / 1.8)
+        .attr("y", cy + r / 2.8)
         .attr("text-anchor", "right")
         .attr("font-size", r)
         .transition().duration(2000)
         .delay(500)
-        .attr("x", x-50 - r / 1.8)
+        .attr("x", cx - 50 - r / 1.8)
         .attr("y", 200 + r / 2.8);
 
     d3.select("#line-" + c.textValue)
         .transition().duration(2000)
         .delay(500)
-        .attr("x2", x-50 - r / 1.8)
+        .attr("x2", cx - 50 - r / 1.8)
         .attr("y2", 200 + r / 2.8)
-        .each("end", this.rotateTransition);
+        .each("end", function() {
+            // I don't know how to call a method of Tree class from here
+            tree.rotateLeftAnimationStep2(x,y,a,b,c);
+        });
 
 }

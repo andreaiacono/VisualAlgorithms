@@ -1,5 +1,5 @@
 var menu = '<ul>\
-        <li class="test"><a href="index.html">Home</a></li>\
+        <li class="test"><a href="index.html"><img src="img/logo.png"/></a></li>\
         <li class="test">\
             <a>Data Structures</a>\
             <ul>\

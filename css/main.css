@@ -19,10 +19,11 @@ textarea {
 }
 
 html {
-    font-size: 1em;
-    line-height: 1.4;
+    font-size: 1.4em;
+    font-weight: 100;
+    line-height: 1.9;
     background: #eee;
-    font-family: 'Lora', serif;
+    font-family: Ubuntu, "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 /*
@@ -64,6 +65,7 @@ canvas,
 img,
 video {
     vertical-align: middle;
+
 }
 
 /*
@@ -192,15 +194,15 @@ nav ul li:hover > ul {
 }
 
 nav ul {
-    background: #ddd;
-    background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);
-    background: -moz-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
-    background: -webkit-linear-gradient(top, #efefef 0%, #bbbbbb 100%);
-    box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.15);
+    background-color: #484A4E;
+    background: linear-gradient(top, #ccc 0%, #ccc 100%);
+    background: -moz-linear-gradient(top, #ccc 0%, #ccc 100%);
+    background: -webkit-linear-gradient(top, #ccc 0%, #ccc 100%);
+    /*box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.15);*/
     padding: 0 20px;
     position: relative;
-    opacity: 0.97;
-    filter: alpha(opacity=97);
+    opacity: 0.96;
+    filter: alpha(opacity=96);
 }
 
 nav ul:after {
@@ -246,7 +248,7 @@ nav ul ul li {
     /*border-top: 1px solid #6b727c;*/
     /*border-bottom: 1px solid #999;*/
     position: relative;
-    width: 170px;
+    width: 240px;
 }
 
 nav ul ul li a {
@@ -255,7 +257,7 @@ nav ul ul li a {
 }
 
 nav ul ul li a:hover {
-    background: #585A5E;
+    background: #484A4E;
 }
 
 nav ul ul ul {
