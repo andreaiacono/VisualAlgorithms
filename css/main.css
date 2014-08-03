@@ -19,7 +19,7 @@ textarea {
 }
 
 html {
-    font-size: 1.4em;
+    font-size: 1.1em;
     font-weight: 100;
     line-height: 1.9;
     background: #eee;
@@ -112,6 +112,12 @@ body {
     display: table;
 }
 
+.index {
+    background-image: url('../img/background.jpg');
+		background-repeat: no-repeat;
+}
+
+
 div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, input, textarea, blockquote {
     margin: 0;
     padding: 0;
@@ -129,6 +135,16 @@ div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, inp
 }
 */
 
+.logo {
+   padding: 0px;
+	width: 132px;
+	height: 36px;
+	background: #ccc;
+	background-image: url('../img/logo.png');
+}
+
+
+
 .title {
     border: solid 0px blue;
     width: 100%;
@@ -144,7 +160,6 @@ svg-container {
     width: 100%;
     text-align: center;
     display: table-row;
-    height: 400px;
 }
 
 svg-container-rotate {
@@ -152,7 +167,6 @@ svg-container-rotate {
     width: 100%;
     text-align: center;
     display: table-row;
-    height: 250px;
 }
 
 .buttons {
@@ -172,7 +186,8 @@ svg-container-rotate {
 
 .presentation {
     color: #222;
-    font-size: 48px;
+    font-size: 36px;
+    font-weight: bolder;
     float: right;
     width: 30%;
     margin: 100px;

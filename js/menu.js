@@ -1,6 +1,5 @@
-var menu = '<ul>\
-        <li class="test"><a href="index.html"><img src="img/logo.png"/></a></li>\
-        <li class="test">\
+var menu = '<ul style="font-family: \'Neucha\'"><li><a href="index.html" style="font-family: \'Neucha\', cursive;">Algoton</a></li>\
+        		<li>\
             <a>Data Structures</a>\
             <ul>\
                 <li><a href="#">Trees</a>\

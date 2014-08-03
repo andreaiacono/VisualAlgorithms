@@ -1,9 +1,10 @@
-function Tree(isRedBlack, tagname, canvasWidth, zoom) {
+function Tree(isRedBlack, tagname, canvasWidth, canvasHeight, zoom) {
     this.isRedBlack = isRedBlack;
     this.tagname = tagname;
     this.canvasWidth = canvasWidth;
+    this.canvasHeight = canvasHeight;
     this.zoom = zoom;
-    this.svg = new Canvas(this.tagname, this.canvasWidth).getCanvas();
+    this.svg = new Canvas(this.tagname, this.canvasWidth, this.canvasHeight).getCanvas();
     this.numNodes = 1;
     this.root = this.createRandomNode("black");
     this.treeHeight = this.getHeight(this.root, 0);
@@ -11,9 +12,8 @@ function Tree(isRedBlack, tagname, canvasWidth, zoom) {
 
 Tree.prototype.reset = function () {
     d3.select("#" + this.tagname + "-canvas").remove();
-    this.svg = new Canvas(this.tagname, this.canvasWidth).getCanvas();
+    this.svg = new Canvas(this.tagname, this.canvasWidth, this.canvasHeight).getCanvas();
     this.root = this.createRandomNode("black");
-    this.fillTree();
     this.treeHeight = this.getHeight(this.root, 0);
     this.draw(false);
 }
@@ -29,6 +29,7 @@ Tree.prototype.createRandomNode = function (color) {
 
 Tree.prototype.fillTree = function () {
 
+	this.reset();
     var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
     this.root.leftNode = new Node(this.getRandomNumber(), color, 1, this.isRedBlack, this.svg);
     color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
@@ -101,6 +102,8 @@ Tree.prototype.fillTree = function () {
     color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
     this.root.rightNode.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
 
+	this.treeHeight = this.getHeight(this.root, 0);
+    this.draw(false);
 }
 
 Tree.prototype.clearCanvas = function () {
@@ -132,12 +135,11 @@ Tree.prototype.getHeight = function (node, level) {
 Tree.prototype.draw = function (rescale) {
 
     var width = document.getElementById(this.tagname + "-canvas").clientWidth;
-    var radius = Math.round(this.zoom * width / 80);
-    r = radius;
+    var r = Math.round(this.zoom * width / 80);
     var x = Math.round(width / 2 - r / 2);
     var y = Math.round(r + r / 3);
 
-    this.drawNode(rescale, null, this.root, x, y, r, this.treeHeight - 1);
+    this.drawNode(rescale, null, this.root, x, y, r, this.treeHeight-1);
 }
 
 Tree.prototype.drawNode = function (rescale, parent, node, x, y, r, h) {
@@ -150,9 +152,9 @@ Tree.prototype.drawNode = function (rescale, parent, node, x, y, r, h) {
         else {
             node.draw(x, y, r, parent);
         }
-        this.drawNode(rescale, node, node.leftNode, x - (r - 1) * h * h, y + r * 3, r, h - 1);
-        this.drawNode(rescale, node, node.rightNode, x + (r - 1) * h * h, y + r * 3, r, h - 1);
-
+        var width = r * 1.2 * Math.pow(2, h) / 2;
+        this.drawNode(rescale, node, node.leftNode, x - width, y + r * 3, r, h - 1);
+        this.drawNode(rescale, node, node.rightNode, x + width, y + r * 3, r, h - 1);
     }
 }
 

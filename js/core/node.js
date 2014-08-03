@@ -31,20 +31,20 @@ Node.prototype.rescale = function (x, y, r, parent) {
         var coords2 = this.getLineCoords(parent.x, parent.y, alpha, r, true);
 
         d3.select("#line-" + this.textValue)
-            .transition().duration(250)
-            .attr("x1", coords1[0])
-            .attr("y1", coords1[1])
-            .attr("x2", coords2[0])
-            .attr("y2", coords2[1])
+            .transition().duration(200)
+            .attr("x2", coords1[0])
+            .attr("y2", coords1[1])
+            .attr("x1", coords2[0])
+            .attr("y1", coords2[1])
     }
 
     d3.select("#circle-" + this.textValue)
-        .transition().duration(250)
+        .transition().duration(200)
         .attr("cx", x)
         .attr("cy", y);
 
     d3.select("#text-" + this.textValue)
-        .transition().duration(250)
+        .transition().duration(200)
         .attr("x", x - r / 1.8)
         .attr("y", y + r / 2.8);
 
@@ -94,7 +94,7 @@ Node.prototype.draw = function (x, y, r, parent) {
                 return tooltips[val].style("visibility", "hidden");
             })
             .transition()
-            .delay(250)
+            .delay(150)
             .attr("r", r)
             .transition()
             .attr("stroke-width", r / 20)
@@ -113,7 +113,7 @@ Node.prototype.draw = function (x, y, r, parent) {
                 return tooltips[val].style("visibility", "hidden");
             })
             .transition()
-            .delay(250)
+            .delay(150)
             .attr("fill", this.textColor)
             .attr("font-size", r)
             .text(this.textValue);
@@ -146,6 +146,7 @@ Node.prototype.getToolTip = function (x, y, r) {
         .style("border-radius", "8px")
         .style("border", "2px solid #555")
         .style("padding", "5px 15px")
+        .style("line-height", "1.2")
         .style("visibility", "hidden")
         .html(this.getInfo());
 }

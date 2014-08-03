@@ -27,13 +27,13 @@
     <script>
         var tree;
         function init() {
-            tree = new Tree(false, "svg-container", "90%", 1);
+            tree = new Tree(false, "svg-container", "90%", "200px", 1);
             tree.draw(false);
         }
 
         window.onresize = function (event) {
-            tree.clear();
             tree.clearCanvas();
+            tree.clear();
             tree.draw(false);
         };
     </script>
@@ -52,6 +52,8 @@
             <button onClick="tree.insertRandomNode()" class="button">Insert node</button>
             &nbsp;&nbsp;&nbsp;
             <button onClick="tree.reset()" class="button">Reset tree</button>
+            &nbsp;&nbsp;&nbsp;
+            <button onClick="tree.fillTree()" class="button">Fill tree</button>
         </div>
         <div class="content">
             A binary tree is a data structure is which each node has at most two children nodes, usually defined as <i>left
