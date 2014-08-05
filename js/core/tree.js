@@ -24,12 +24,16 @@ Tree.prototype.createRandomNode = function () {
 }
 
 Tree.prototype.createRandomNode = function (color) {
-    return new Node(this.getRandomNumber(), color, 0, this.isRedBlack, this.svg);
+    return this.createNode(this.getRandomNumber(), color);
+}
+
+Tree.prototype.createNode = function (value, color) {
+    return new Node(value, color, 0, this.isRedBlack, this.svg);
 }
 
 Tree.prototype.fillTree = function () {
 
-	this.reset();
+    this.reset();
     var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
     this.root.leftNode = new Node(this.getRandomNumber(), color, 1, this.isRedBlack, this.svg);
     color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
@@ -102,7 +106,7 @@ Tree.prototype.fillTree = function () {
     color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
     this.root.rightNode.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
 
-	this.treeHeight = this.getHeight(this.root, 0);
+    this.treeHeight = this.getHeight(this.root, 0);
     this.draw(false);
 }
 
@@ -139,7 +143,7 @@ Tree.prototype.draw = function (rescale) {
     var x = Math.round(width / 2 - r / 2);
     var y = Math.round(r + r / 3);
 
-    this.drawNode(rescale, null, this.root, x, y, r, this.treeHeight-1);
+    this.drawNode(rescale, null, this.root, x, y, r, this.treeHeight - 1);
 }
 
 Tree.prototype.drawNode = function (rescale, parent, node, x, y, r, h) {
@@ -218,74 +222,93 @@ Tree.prototype.insertNodes = function () {
     }
 }
 
-Tree.prototype.rotateLeftAnimationStep1 = function () {
+Tree.prototype.rotateLeftAnimation = function () {
 
     this.clearCanvas();
     this.clear();
 
-    this.root.leftNode = null;
+    this.root = this.createNode("P", "black");
 
-    var x = this.createRandomNode("black");
-    this.root.rightNode = x;
+    var a = this.createNode("A", "black");
+    this.root.leftNode = a;
 
-    var a = this.createRandomNode("black");
-    x.leftNode = a;
+    var q = this.createNode("Q", "black");
+    this.root.rightNode = q;
 
-    var y = this.createRandomNode("black");
-    x.rightNode = y;
+    var b = this.createNode("B", "black");
+    q.leftNode = b;
 
-    var b = this.createRandomNode("black");
-    y.leftNode = b;
-
-    var c = this.createRandomNode("black");
-    y.rightNode = c;
+    var c = this.createNode("C", "black");
+    q.rightNode = c;
 
     this.treeHeight = this.getHeight(this.root, 0);
     this.draw(false);
-    this.rotateLeftAnimationStep2();
+    this.duration = 2000;
+    this.rotateLeftAnimationStep1();
+}
+
+Tree.prototype.rotateLeftAnimationStep1 = function () {
+
+    var p = this.root;
+
+    d3.select("#circle-" + p.textValue)
+        .transition()
+        .delay(this.duration)
+        .each("end", function () {
+            treeRotate.rotateLeftAnimationStep2();
+        });
 }
 
 Tree.prototype.rotateLeftAnimationStep2 = function () {
 
-    var x = this.root.rightNode;
-    var a = x.leftNode;
-    var y = x.rightNode;
-    var b = y.leftNode;
-    var c = y.rightNode;
+    var p = this.root;
+    var a = p.leftNode;
+    var q = p.rightNode;
+    var b = q.leftNode;
+    var c = q.rightNode;
+    var r = d3.select("#circle-" + p.textValue).attr("r");
 
+    p.moveTo(0, r * 1.5, null, false, this.duration);
+    a.moveTo(0, r * 1.5, p, true, this.duration);
+    q.moveTo(0, -r * 1.5, p, true, this.duration);
+    c.moveTo(0, -r * 1.5, q, true, this.duration);
+    b.moveTo(0, -r * 1.5, q, false, this.duration);
 
-    var cx = d3.select("#circle-" + c.textValue).attr("cx");
-    var cy = d3.select("#circle-" + c.textValue).attr("cy");
-    var r = d3.select("#circle-" + c.textValue).attr("r");
-    console.log("transtion c=" + c + " x=" + cx + " y=" + cy + " r=" + r);
-
-    d3.select("#circle-" + c.textValue)
-        .attr("r", r)
-        .attr("cx", cx)
-        .attr("cy", cy)
-        .transition().duration(2000)
-        .delay(500)
-        .attr("cx", cx - 50)
-        .attr("cy", 200);
-
-    d3.select("#text-" + c.textValue)
-        .attr("x", cx - r / 1.8)
-        .attr("y", cy + r / 2.8)
-        .attr("text-anchor", "right")
-        .attr("font-size", r)
-        .transition().duration(2000)
-        .delay(500)
-        .attr("x", cx - 50 - r / 1.8)
-        .attr("y", 200 + r / 2.8);
-
-    d3.select("#line-" + c.textValue)
-        .transition().duration(2000)
-        .delay(500)
-        .attr("x2", cx - 50 - r / 1.8)
-        .attr("y2", 200 + r / 2.8)
-        .each("end", function() {
-            // I don't know how to call a method of Tree class from here
-            tree.rotateLeftAnimationStep2(x,y,a,b,c);
+    d3.select("#circle-" + p.textValue)
+        .transition()
+        .delay(this.duration)
+        .each("end", function () {
+            treeRotate.rotateLeftAnimationStep3();
         });
-
 }
+
+Tree.prototype.rotateLeftAnimationStep3 = function () {
+    console.log("step3");
+
+    var p = this.root;
+    var a = p.leftNode;
+    var q = p.rightNode;
+    var b = q.leftNode;
+    var c = q.rightNode;
+    var r = d3.select("#circle-" + p.textValue).attr("r");
+    console.log("step3");
+    this.root = q;
+    q.rightNode = c;
+    q.leftNode = p;
+    p.leftNode = a;
+    p.rightNode = b;
+
+    p.moveTo(-r/2, r * 1.5, q, true, this.duration);
+    q.moveTo(0, -r * 1.5, p, true, this.duration);
+    c.moveTo(r*1.5, -r * 1.5, q, true, this.duration);
+    b.moveTo(0, r * 1.5, p, true, this.duration);
+    a.moveTo(0, r * 1.5, p, true, this.duration);
+
+    d3.select("#circle-" + q.textValue)
+        .transition()
+        .delay(this.duration * 2)
+        .each("end", function () {
+            treeRotate.rotateLeftAnimation();
+        });
+}
+

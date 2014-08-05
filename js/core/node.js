@@ -6,6 +6,9 @@ function Node(value, color, level, isRedBlack, svg) {
     this.lineObject;
     this.x;
     this.y;
+    this.oldX;
+    this.oldY;
+    this.r;
 
     this.leftNode = null;
     this.rightNode = null;
@@ -55,6 +58,10 @@ Node.prototype.rescale = function (x, y, r, parent) {
 var tooltips = [];
 
 Node.prototype.draw = function (x, y, r, parent) {
+
+    this.x = x;
+    this.y = y;
+    this.r = r;
 
     var val = parseInt(this.textValue);
     tooltips[val] = this.getToolTip(x, y, r);
@@ -121,9 +128,54 @@ Node.prototype.draw = function (x, y, r, parent) {
         this.alreadyDrawn = true;
     }
 
-    this.x = x;
-    this.y = y;
 };
+
+
+Node.prototype.moveTo = function (x, y, parent, deleteLink, duration) {
+
+    this.oldX = this.x;
+    this.oldY = this.y;
+    this.x += x;
+    this.y += y;
+    console.log("this.r=" + this.r + " this.x=" + this.x + " this.y=" + this.y + " oldX=" + this.oldX + " oldY=" + this.oldY + " drawlink=" + deleteLink + " x=" + x + " y=" + y + (parent != null ? (" parent=" + parent.textValue + " parent.x=" + parent.x + " parent.y=" + parent.y) : ""));
+
+    if (parent != null) {
+
+        if (deleteLink) {
+            var alpha = Math.atan2(this.y - parent.y, this.x - parent.x);
+            var coords1 = this.getLineCoords(this.x, this.y, alpha, this.r, false);
+            var coords2 = this.getLineCoords(parent.x, parent.y, alpha, this.r, true);
+
+            d3.select("#line-" + this.textValue)
+//                .attr("stroke-width", 0)
+                .transition().duration(duration)
+                .attr("stroke-width", 1)
+                .attr("x2", coords1[0])
+                .attr("y2", coords1[1])
+                .attr("x1", coords2[0])
+                .attr("y1", coords2[1])
+        }
+        else {
+            d3.select("#line-" + this.textValue)
+                .attr("stroke-width", 1)
+                .transition().duration(duration)
+                .attr("stroke-width", 0)
+        }
+    }
+
+
+    d3.select("#circle-" + this.textValue)
+        .transition().duration(duration)
+        .attr("cx", this.x)
+        .attr("cy", this.y);
+
+    d3.select("#text-" + this.textValue)
+        .transition().duration(duration)
+        .attr("x", this.x - this.r / 1.8)
+        .attr("y", this.y + this.r / 2.8)
+        .attr("font-size", this.r)
+        .text(this.textValue);
+}
 
 
 Node.prototype.getToolTip = function (x, y, r) {
@@ -163,7 +215,7 @@ Node.prototype.getLineCoords = function (x, y, alpha, r, isParent) {
         y -= Math.sin(alpha) * r;
     }
 
-    return [x, y];
+    return [Math.round(x), Math.round(y)];
 }
 
 Node.prototype.getInfo = function () {
