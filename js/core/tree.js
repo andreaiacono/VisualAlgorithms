@@ -241,7 +241,7 @@ Tree.prototype.rotateAnimationStep1 = function () {
     d3.select("#" + this.tagname + "-label")
         .transition()
         .text("Rotate Left")
-        .delay(this.duration/2)
+        .delay(this.duration / 2)
         .each("end", function () {
             treeRotate.rotateAnimationStep2();
         });
@@ -291,9 +291,10 @@ Tree.prototype.rotateAnimationStep3 = function () {
     b.moveTo(0, r * 1.5, p, true, this.duration);
     a.moveTo(0, r * 1.5, p, true, this.duration);
 
-    d3.select("#circle-" + q.textValue)
+    d3.select("#" + this.tagname + "-label")
         .transition()
-        .delay(this.duration * 2)
+        .text("")
+        .delay(this.duration)
         .each("end", function () {
             treeRotate.rotateAnimationStep4();
         });
@@ -304,12 +305,11 @@ Tree.prototype.rotateAnimationStep4 = function () {
     d3.select("#" + this.tagname + "-label")
         .transition()
         .text("Rotate Right")
-        .delay(this.duration/10)
+        .delay(this.duration)
         .each("end", function () {
             treeRotate.rotateAnimationStep5();
         });
 }
-
 
 Tree.prototype.rotateAnimationStep5 = function () {
 
@@ -353,9 +353,10 @@ Tree.prototype.rotateAnimationStep6 = function () {
     b.moveTo(0, r * 1.5, q, true, this.duration);
     a.moveTo(0, -r * 1.5, p, true, this.duration);
 
-    d3.select("#circle-" + q.textValue)
+    d3.select("#" + this.tagname + "-label")
         .transition()
-        .delay(this.duration * 2)
+        .text("")
+        .delay(this.duration)
         .each("end", function () {
             treeRotate.rotateAnimationStep1();
         });
