@@ -12,6 +12,19 @@ Canvas.prototype.init = function (tagname, canvasWidth, canvasHeight) {
         .style("margin", "20, auto")
         .style("border", "2px solid #555")
         .style("fill-opacity", "0.8");
+
+    var width = document.getElementById(tagname + "-canvas").clientWidth;
+    var height = document.getElementById(tagname + "-canvas").clientHeight;
+
+    this.svg.append("text")
+        .attr("id", tagname + "-label")
+        .attr("x", width/2.9)
+        .attr("y", height*0.95)
+        .attr("font-size", 20)
+        .attr("font-weight", "bold")
+        .style("cursor", "default")
+        .text("");
+
 }
 
 Canvas.prototype.getCanvas = function () {

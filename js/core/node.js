@@ -137,7 +137,6 @@ Node.prototype.moveTo = function (x, y, parent, deleteLink, duration) {
     this.oldY = this.y;
     this.x += x;
     this.y += y;
-    console.log("this.r=" + this.r + " this.x=" + this.x + " this.y=" + this.y + " oldX=" + this.oldX + " oldY=" + this.oldY + " drawlink=" + deleteLink + " x=" + x + " y=" + y + (parent != null ? (" parent=" + parent.textValue + " parent.x=" + parent.x + " parent.y=" + parent.y) : ""));
 
     if (parent != null) {
 
@@ -147,7 +146,6 @@ Node.prototype.moveTo = function (x, y, parent, deleteLink, duration) {
             var coords2 = this.getLineCoords(parent.x, parent.y, alpha, this.r, true);
 
             d3.select("#line-" + this.textValue)
-//                .attr("stroke-width", 0)
                 .transition().duration(duration)
                 .attr("stroke-width", 1)
                 .attr("x2", coords1[0])
@@ -162,7 +160,6 @@ Node.prototype.moveTo = function (x, y, parent, deleteLink, duration) {
                 .attr("stroke-width", 0)
         }
     }
-
 
     d3.select("#circle-" + this.textValue)
         .transition().duration(duration)

@@ -31,7 +31,8 @@
         function init() {
             tree = new Tree(true, "svg-container", "90%", "400px", 1);
             tree.draw(false);
-            treeRotate = new Tree(true, "svg-container-rotate", "50%", "200px", 2.5);
+            treeRotate = new Tree(true, "svg-container-rotate", "30%", "200px", 4);
+            treeRotate.rotateAnimation();
         }
 
         window.onresize = function (event) {
@@ -64,10 +65,7 @@
         A red-black tree is a data structure which is a type of self-balancing binary search tree.
     </div>
     <svg-container-rotate></svg-container-rotate>
-    <div class="buttons">
-        <button onClick="treeRotate.rotateLeftAnimation()" class="button">Start animation</button>
-    </div>
-    <div class="content" border="1">
+     <div class="content" border="1">
         <b>Rotations</b>
 
         <p>How does inserting or deleting nodes affect a red-black tree? To ensure that its color scheme and properties
