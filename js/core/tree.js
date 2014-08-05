@@ -264,7 +264,7 @@ Tree.prototype.rotateAnimationStep2 = function () {
 
     d3.select("#circle-" + p.textValue)
         .transition()
-        .delay(this.duration/2)
+        .delay(this.duration)
         .each("end", function () {
             treeRotate.rotateAnimationStep3();
         });
