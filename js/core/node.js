@@ -215,13 +215,26 @@ Node.prototype.getLineCoords = function (x, y, alpha, r, isParent) {
     return [Math.round(x), Math.round(y)];
 }
 
+
+Node.prototype.hasChildren = function () {
+    return this.leftNode != null || this.rightNode != null;
+}
+
+Node.prototype.hasOneChild = function () {
+    return (this.leftNode != null && this.rightNode == null) || (this.leftNode == null && this.rightNode != null);
+}
+
+Node.prototype.isLeaf = function () {
+    return this.leftNode == null && this.rightNode == null;
+}
+
 Node.prototype.getInfo = function () {
 
     var info = "";
     if (this.level != undefined && this.level == 0) {
         info += "<div style=\"text-align: center\"><b>Root Node</b></div>";
     }
-    else if (this.leftNode == null && this.rightNode == null) {
+    else if (this.isLeaf()) {
         info += "<div style=\"text-align: center\"><b>Leaf Node</b></div>";
     }
     info += "Key: <b>" + this.textValue + "</b>";

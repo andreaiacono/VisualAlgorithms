@@ -143,7 +143,13 @@ div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, inp
 	background-image: url('../img/logo.png');
 }
 
-
+input {
+    border: 2px solid #444;
+    font-family: serif;
+    color: black;
+    padding-left: 3px;
+    width: 50px;
+}
 
 .title {
     border: solid 0px blue;
@@ -289,9 +295,14 @@ nav ul .last {
     background-color: lightgray;
     border: 2px solid #444;
     text-align: center;
-    padding: 8px 25px;
+    padding: 5px 20px;
     font-family: serif;
     color: #444;
+}
+
+.response {
+    color: black;
+    display: inline-block;
 }
 
 /* ==========================================================================
@@ -405,12 +416,6 @@ nav ul .last {
     /* Style adjustments for viewports that meet the condition */
 }
 
-@media print,
-(-o-min-device-pixel-ratio: 5/4),
-(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
-}
 
 /* ==========================================================================
    Print styles.

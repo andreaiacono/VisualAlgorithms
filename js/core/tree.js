@@ -96,6 +96,30 @@ Tree.prototype.clearNodes = function (node) {
     }
 }
 
+Tree.prototype.getNode = function (node, value) {
+    if (node != null) {
+        if (node.textValue == value) return node;
+        var leftResult = this.getNode(node.leftNode, value);
+        var rightResult = this.getNode(node.rightNode, value);
+        if (leftResult != null) return leftResult;
+        if (rightResult != null) return rightResult;
+    }
+    return null;
+}
+
+Tree.prototype.getParentNode = function (node, value) {
+    if (node != null) {
+        if (node.leftNode != null && node.leftNode.textValue == value) return node;
+        if (node.rightNode != null && node.rightNode.textValue == value) return node;
+
+        var leftResult = this.getParentNode(node.leftNode, value);
+        var rightResult = this.getParentNode(node.rightNode, value);
+        if (leftResult != null) return leftResult;
+        if (rightResult != null) return rightResult;
+    }
+    return null;
+}
+
 Tree.prototype.getHeight = function (node, level) {
 
     if (node == null) return level;
@@ -131,6 +155,69 @@ Tree.prototype.drawNode = function (rescale, parent, node, x, y, r, h) {
         this.drawNode(rescale, node, node.rightNode, x + width, y + r * 3, r, h - 1);
     }
 }
+
+Tree.prototype.getLeaf = function () {
+
+    var node = this.root;
+    while (!node.isLeaf()) {
+        if (node.leftNode != null && node.rightNode != null) node = node.leftNode;
+        else if (node.rightNode != null) node = node.rightNode;
+        else node = node.leftNode;
+    }
+
+    return node;
+}
+
+
+/** in a binary tree (not SBT) we can delete and substitute any node **/
+Tree.prototype.deleteNode = function (value) {
+
+    if (this.root.textValue == value && this.root.isLeaf()) return "Root node cannot be deleted";
+    var parentNode = this.getParentNode(this.root, value);
+    if (parentNode != null) {
+
+        var isLeftNode = parentNode.leftNode != null && parentNode.leftNode.textValue == value;
+        var nodeToDelete = isLeftNode ? parentNode.leftNode : parentNode.rightNode;
+        if (nodeToDelete.isLeaf()) {
+            if (isLeftNode) parentNode.leftNode = null;
+            else parentNode.rightNode = null;
+            return "Node deleted";
+        }
+        var node = nodeToDelete;
+        var parentLeafNode = node;
+        while (!node.isLeaf()) {
+            parentLeafNode = node;
+            if (node.leftNode != null && node.rightNode != null) node = node.leftNode;
+            else if (node.rightNode != null) node = node.rightNode;
+            else node = node.leftNode;
+        }
+
+        if (isLeftNode) {
+            parentLeafNode.leftNode != null && parentLeafNode.leftNode.textValue == value ? parentLeafNode.leftNode = null : parentLeafNode.rightNode = null;
+            node.leftNode = parentNode.leftNode.leftNode;
+            node.rightNode = parentNode.leftNode.rightNode;
+            parentNode.leftNode = node;
+        }
+        else if (parentNode.rightNode != null && parentNode.rightNode.textValue == value) {
+            node.leftNode = parentNode.rightNode.leftNode;
+            node.rightNode = parentNode.rightNode.rightNode;
+            parentNode.rightNode = node;
+        }
+
+        this.draw(false);
+        return "Node deleted";
+    }
+    else return "Node not found";
+}
+
+Tree.prototype.getOneChildedNode = function (node, value) {
+
+    if (node != null) {
+
+        if (node.hasOneChild()) return node;
+    }
+}
+
 
 Tree.prototype.insertRandomNode = function () {
     this.insertNode(this.getRandomNumber());
