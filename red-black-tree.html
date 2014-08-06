@@ -24,14 +24,15 @@
     <script src="js/core/canvas.js"></script>
     <script src="js/core/node.js"></script>
     <script src="js/core/tree.js"></script>
+    <script src="js/core/redblacktree.js"></script>
     <script>
         var tree;
         var treeRotate;
 
         function init() {
-            tree = new Tree(true, "svg-container", "90%", "400px", 1);
+            tree = new RedBlackTree("svg-container", "90%", "400px", 1);
             tree.draw(false);
-            treeRotate = new Tree(true, "svg-container-rotate", "30%", "200px", 4);
+            treeRotate = new RedBlackTree("svg-container-rotate", "30%", "200px", 4);
             treeRotate.rotateAnimation();
         }
 
@@ -60,6 +61,8 @@
         <button onClick="tree.insertRandomNode()" class="button">Insert node</button>
         &nbsp;&nbsp;&nbsp;
         <button onClick="tree.reset()" class="button">Reset tree</button>
+        &nbsp;&nbsp;&nbsp;
+        <button onClick="tree.fillTree()" class="button">Fill tree</button>
     </div>
     <div class="content">
         A red-black tree is a data structure which is a type of self-balancing binary search tree.
