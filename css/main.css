@@ -303,6 +303,8 @@ nav ul .last {
 .response {
     color: black;
     display: inline-block;
+    width: 200px;
+    text-align: left;
 }
 
 /* ==========================================================================

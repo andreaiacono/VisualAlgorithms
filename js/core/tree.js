@@ -169,7 +169,7 @@ Tree.prototype.getLeaf = function () {
 }
 
 
-/** in a binary tree (not SBT) we can delete and substitute any node **/
+/** in a binary tree (not SBT) we can delete by substituting any node **/
 Tree.prototype.deleteNode = function (value) {
 
     if (this.root.textValue == value && this.root.isLeaf()) return "Root node cannot be deleted";
@@ -192,19 +192,41 @@ Tree.prototype.deleteNode = function (value) {
             else node = node.leftNode;
         }
 
+        if (parentLeafNode.textValue == nodeToDelete.textValue) {
+
+            if (isLeftNode) {
+                console.log("parentleafleft true");
+                node.leftNode = nodeToDelete.rightNode;
+                parentNode.leftNode = node;
+            }
+            else {
+                console.log("parentleafleft false");
+                node.rightNode = nodeToDelete.rightNode;
+                parentNode.rightNode = node;
+            }
+            return "Node deleted 2";
+        }
+
+        var isParentLeafLeftNode = parentLeafNode.leftNode != null && parentLeafNode.leftNode.textValue == node.textValue;
+        if (isParentLeafLeftNode) {
+            parentLeafNode.leftNode = null;
+        }
+        else {
+            parentLeafNode.rightNode = null;
+        }
+
+
         if (isLeftNode) {
-            parentLeafNode.leftNode != null && parentLeafNode.leftNode.textValue == value ? parentLeafNode.leftNode = null : parentLeafNode.rightNode = null;
             node.leftNode = parentNode.leftNode.leftNode;
             node.rightNode = parentNode.leftNode.rightNode;
             parentNode.leftNode = node;
         }
-        else if (parentNode.rightNode != null && parentNode.rightNode.textValue == value) {
+        else {
             node.leftNode = parentNode.rightNode.leftNode;
             node.rightNode = parentNode.rightNode.rightNode;
             parentNode.rightNode = node;
         }
 
-        this.draw(false);
         return "Node deleted";
     }
     else return "Node not found";
@@ -277,4 +299,27 @@ Tree.prototype.insertNodes = function () {
     for (j = 0; j < 1; j++) {
         this.insertNode();
     }
+}
+
+Tree.prototype.getColor = function () {
+    return "black";
+}
+
+Tree.prototype.fillTree = function (levels) {
+    this.recursiveFillTree(this.root, levels);
+    this.treeHeight = this.getHeight(this.root, 0);
+    this.draw(false);
+}
+
+Tree.prototype.recursiveFillTree = function (node, levels) {
+
+    if (levels == 0) return;
+
+    var left = new Node(this.getRandomNumber(), this.getColor(), 1, this.isRedBlack, this.svg);
+    var right = new Node(this.getRandomNumber(), this.getColor(), 1, this.isRedBlack, this.svg);
+    node.leftNode = left;
+    node.rightNode = right;
+
+    this.recursiveFillTree(node.leftNode, levels -1);
+    this.recursiveFillTree(node.rightNode, levels -1);
 }

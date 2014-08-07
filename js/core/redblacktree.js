@@ -1,4 +1,4 @@
-function RedBlackTree(tagname, canvasWidth, canvasHeight, zoom){
+function RedBlackTree(tagname, canvasWidth, canvasHeight, zoom) {
     this.tagname = tagname;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
@@ -9,7 +9,7 @@ function RedBlackTree(tagname, canvasWidth, canvasHeight, zoom){
 RedBlackTree.prototype = new Tree();
 
 
-Tree.prototype.rotateAnimation = function () {
+RedBlackTree.prototype.rotateAnimation = function () {
 
     this.root = this.createNode("P", "black");
     this.root.leftNode = this.createNode("A", "black");
@@ -23,7 +23,7 @@ Tree.prototype.rotateAnimation = function () {
     this.rotateAnimationStep1();
 }
 
-Tree.prototype.rotateAnimationStep1 = function () {
+RedBlackTree.prototype.rotateAnimationStep1 = function () {
 
     d3.select("#" + this.tagname + "-label")
         .transition()
@@ -34,7 +34,7 @@ Tree.prototype.rotateAnimationStep1 = function () {
         });
 }
 
-Tree.prototype.rotateAnimationStep2 = function () {
+RedBlackTree.prototype.rotateAnimationStep2 = function () {
 
     var p = this.root;
     var a = p.leftNode;
@@ -57,7 +57,7 @@ Tree.prototype.rotateAnimationStep2 = function () {
         });
 }
 
-Tree.prototype.rotateAnimationStep3 = function () {
+RedBlackTree.prototype.rotateAnimationStep3 = function () {
 
     var p = this.root;
     var a = p.leftNode;
@@ -87,7 +87,7 @@ Tree.prototype.rotateAnimationStep3 = function () {
         });
 }
 
-Tree.prototype.rotateAnimationStep4 = function () {
+RedBlackTree.prototype.rotateAnimationStep4 = function () {
 
     d3.select("#" + this.tagname + "-label")
         .transition()
@@ -98,7 +98,7 @@ Tree.prototype.rotateAnimationStep4 = function () {
         });
 }
 
-Tree.prototype.rotateAnimationStep5 = function () {
+RedBlackTree.prototype.rotateAnimationStep5 = function () {
 
     var q = this.root;
     var p = q.leftNode;
@@ -125,7 +125,7 @@ Tree.prototype.rotateAnimationStep5 = function () {
         });
 }
 
-Tree.prototype.rotateAnimationStep6 = function () {
+RedBlackTree.prototype.rotateAnimationStep6 = function () {
 
     var p = this.root;
     var a = p.leftNode;
@@ -149,81 +149,7 @@ Tree.prototype.rotateAnimationStep6 = function () {
         });
 }
 
-Tree.prototype.fillTree = function () {
-
-    this.reset();
-    var color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode = new Node(this.getRandomNumber(), color, 1, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode = new Node(this.getRandomNumber(), color, 1, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.leftNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.rightNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.leftNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.rightNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.leftNode.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    color = !this.isRedBlack ? "black" : Math.random() > 0.5 ? "black" : "red";
-    this.root.rightNode.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.treeHeight = this.getHeight(this.root, 0);
-    this.draw(false);
+RedBlackTree.prototype.getColor = function () {
+    return Math.random() > 0.5 ? "black" : "red";
 }
+

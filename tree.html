@@ -27,7 +27,7 @@
     <script>
         var tree;
         function init() {
-            tree = new Tree(false, "svg-container", "90%", "200px", 1);
+            tree = new Tree(false, "svg-container", "90%", "250px", 1);
             tree.draw(false);
         }
 
@@ -36,6 +36,10 @@
             tree.clear();
             tree.draw(false);
         };
+
+        function cleanLabel() {
+            document.getElementById("responseLabel").innerHTML = "";
+        }
 
         function deleteNode() {
             var nodeValue = document.getElementById("deleteNode").value;
@@ -52,34 +56,35 @@
 
 </head>
 <body onLoad="init()">
-<!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
-<![endif]-->
-<nav id="menu"></nav>
-<div class="container">
-    <div class="title">Binary Trees</div>
-    <svg-container></svg-container>
-    <div class="buttons">
-        <button onClick="tree.insertRandomNode()" class="button">Insert node</button>
-        &nbsp;&nbsp;&nbsp;
-        <button onClick="tree.reset()" class="button">Reset tree</button>
-        &nbsp;&nbsp;&nbsp;
-        <button onClick="tree.fillTree()" class="button">Fill tree</button>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button onClick="deleteNode()" class="button">Delete node</button>
-        &nbsp;<input type="text" id="deleteNode"/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div id="responseLabel" class="response">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <nav id="menu"></nav>
+    <div class="container">
+        <div class="title">Binary Trees</div>
+        <svg-container></svg-container>
+        <div class="buttons">
+            <button onClick="tree.insertRandomNode()" class="button">Insert node</button>
+            &nbsp;&nbsp;&nbsp;
+            <button onClick="tree.reset()" class="button">Reset tree</button>
+            &nbsp;&nbsp;&nbsp;
+            <button onClick="tree.fillTree(5)" class="button">Fill tree</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button onClick="deleteNode()" onblur="cleanLabel()" class="button">Delete node</button>
+            &nbsp;<input type="text" id="deleteNode"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div id="responseLabel" class="response">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
+        <div class="content">
+            A binary tree is a data structure is which each node has at most two children nodes, usually defined as <i>left
+            node</i> and
+            <i>right node</i>. In a binary tree, the degree of each node can be at most two. Binary trees are
+            used to implement binary search trees and binary heaps, and are used for efficient searching and sorting. A
+            binary tree is a special case of a K-ary tree, where k is 2.
+        </div>
     </div>
-    <div class="content">
-        A binary tree is a data structure is which each node has at most two children nodes, usually defined as <i>left
-        node</i> and <i>right node</i>. In a binary tree, the degree of each node can be at most two. Binary trees are
-        used to implement binary search trees and binary heaps, and are used for efficient searching and sorting. A
-        binary tree is a special case of a K-ary tree, where k is 2.
-    </div>
-</div>
 </body>
 </html>
