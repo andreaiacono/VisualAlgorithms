@@ -130,6 +130,12 @@ Node.prototype.draw = function (x, y, r, parent) {
 
 };
 
+Node.prototype.removeFromCanvas = function () {
+    d3.select("#line-" + this.textValue).remove();
+    d3.select("#circle-" + this.textValue).remove();
+    d3.select("#text-" + this.textValue).remove();
+};
+
 
 Node.prototype.moveTo = function (x, y, parent, deleteLink, duration) {
 

@@ -27,7 +27,7 @@
     <script>
         var tree;
         function init() {
-            tree = new Tree(false, "svg-container", "90%", "250px", 1);
+            tree = new Tree(false, "svg-container", "90%", "400px", 1);
             tree.draw(false);
         }
 
@@ -44,12 +44,16 @@
         function deleteNode() {
             var nodeValue = document.getElementById("deleteNode").value;
             if (nodeValue != '') {
+                var treeHeight = tree.getHeight(tree.root, 0);
                 var response = tree.deleteNode(nodeValue);
                 document.getElementById("responseLabel").innerHTML = response;
                 document.getElementById("deleteNode").value = "";
-                tree.clearCanvas();
-                tree.clear();
-                tree.draw(false);
+                var newHeight = tree.getHeight(tree.root, 0);
+
+                if (treeHeight != newHeight) {
+                    tree.treeHeight = newHeight;
+                }
+                tree.draw(true)
             }
         }
     </script>

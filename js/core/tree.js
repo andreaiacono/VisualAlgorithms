@@ -31,55 +31,6 @@ Tree.prototype.createNode = function (value, color) {
     return new Node(value, color, 0, this.isRedBlack, this.svg);
 }
 
-Tree.prototype.fillTree = function () {
-
-    this.reset();
-    var color = "black";
-    this.root.leftNode = new Node(this.getRandomNumber(), color, 1, this.isRedBlack, this.svg);
-    this.root.rightNode = new Node(this.getRandomNumber(), color, 1, this.isRedBlack, this.svg);
-    this.root.leftNode.leftNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
-    this.root.leftNode.rightNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
-    this.root.rightNode.leftNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
-    this.root.rightNode.rightNode = new Node(this.getRandomNumber(), color, 2, this.isRedBlack, this.svg);
-
-    this.root.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.leftNode.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.leftNode.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.leftNode.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.leftNode.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.leftNode.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.leftNode.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.leftNode.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.leftNode.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.rightNode.leftNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.rightNode.leftNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.rightNode.leftNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.rightNode.leftNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.rightNode.rightNode.leftNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.rightNode.rightNode.leftNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.root.rightNode.rightNode.rightNode.leftNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-    this.root.rightNode.rightNode.rightNode.rightNode = new Node(this.getRandomNumber(), color, 3, this.isRedBlack, this.svg);
-
-    this.treeHeight = this.getHeight(this.root, 0);
-    this.draw(false);
-}
-
 Tree.prototype.clearCanvas = function () {
     this.svg.text("");
 }
@@ -172,12 +123,14 @@ Tree.prototype.getLeaf = function () {
 /** in a binary tree (not SBT) we can delete by substituting any node **/
 Tree.prototype.deleteNode = function (value) {
 
-    if (this.root.textValue == value && this.root.isLeaf()) return "Root node cannot be deleted";
+    if (this.root.textValue == value) return "Root node cannot be deleted";
     var parentNode = this.getParentNode(this.root, value);
     if (parentNode != null) {
 
         var isLeftNode = parentNode.leftNode != null && parentNode.leftNode.textValue == value;
         var nodeToDelete = isLeftNode ? parentNode.leftNode : parentNode.rightNode;
+        nodeToDelete.removeFromCanvas();
+
         if (nodeToDelete.isLeaf()) {
             if (isLeftNode) parentNode.leftNode = null;
             else parentNode.rightNode = null;
@@ -204,7 +157,7 @@ Tree.prototype.deleteNode = function (value) {
                 node.rightNode = nodeToDelete.rightNode;
                 parentNode.rightNode = node;
             }
-            return "Node deleted 2";
+            return "Node deleted";
         }
 
         var isParentLeafLeftNode = parentLeafNode.leftNode != null && parentLeafNode.leftNode.textValue == node.textValue;
@@ -306,6 +259,9 @@ Tree.prototype.getColor = function () {
 }
 
 Tree.prototype.fillTree = function (levels) {
+    this.clearCanvas();
+    this.clear();
+    this.clearNodes(this.root);
     this.recursiveFillTree(this.root, levels);
     this.treeHeight = this.getHeight(this.root, 0);
     this.draw(false);
