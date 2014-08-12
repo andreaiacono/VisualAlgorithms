@@ -136,7 +136,6 @@ Node.prototype.removeFromCanvas = function () {
     d3.select("#text-" + this.textValue).remove();
 };
 
-
 Node.prototype.moveTo = function (x, y, parent, deleteLink, duration) {
 
     this.oldX = this.x;

@@ -20,6 +20,7 @@ RedBlackTree.prototype.rotateAnimation = function () {
     this.treeHeight = this.getHeight(this.root, 0);
     this.draw(false);
     this.duration = 1500;
+    this.durationSlow = 1000;
     this.rotateAnimationStep1();
 }
 
@@ -51,7 +52,7 @@ RedBlackTree.prototype.rotateAnimationStep2 = function () {
 
     d3.select("#circle-" + p.textValue)
         .transition()
-        .delay(this.duration)
+        .delay(this.durationSlow)
         .each("end", function () {
             treeRotate.rotateAnimationStep3();
         });
@@ -119,7 +120,7 @@ RedBlackTree.prototype.rotateAnimationStep5 = function () {
 
     d3.select("#circle-" + p.textValue)
         .transition()
-        .delay(this.duration)
+        .delay(this.durationSlow)
         .each("end", function () {
             treeRotate.rotateAnimationStep6();
         });
